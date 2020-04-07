@@ -77,7 +77,7 @@ class AsyncServiceFactoryTest extends TestCase
                 'root_dir' => '/root/dir',
                 'console_path' => 'console/path',
                 'is_console_path_absolute' => false,
-                'absolute_console_path' => '/root/dir/../console/path',
+                'absolute_console_path' => '/root/dir/console/path',
                 'php_path' => '/php/path',
             ],
         ];
