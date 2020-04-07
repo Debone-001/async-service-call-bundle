@@ -70,7 +70,7 @@ class AsyncServiceFactory
         $consolePath = $this->consolePath;
 
         if (!$this->filesystem->isAbsolutePath($consolePath)) {
-            $consolePath = $this->rootDir . '/../' . $consolePath;
+            $consolePath = $this->rootDir . '/' . $consolePath;
         }
 
         if (!$this->filesystem->exists($consolePath)) {

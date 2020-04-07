@@ -7,6 +7,15 @@ services:
             - '%krlove_async_service_call.console_path%'
             - '%krlove_async_service_call.php_path%'
 
+    Krlove\AsyncServiceCallBundle\AsyncServiceFactory: '@krlove.async.factory'
+
     krlove.async:
         factory: ['@Krlove\AsyncServiceCallBundle\AsyncService', 'createAsyncService']
         public: true
+
+    krlove.service:
+        class: Krlove\AsyncServiceCallBundle\Command\CallServiceCommand
+        tags:
+            - { name: 'console.command', command: 'krlove:service:call' }
+        autowire: true
+        autoconfigure: true # automatically registers your service as commands

@@ -42,7 +42,7 @@ class AsyncService
     public function call(
         string $service,
         string $method,
-        array  $arguments
+        array  $arguments = []
     ) : int {
         $commandline = $this->createCommandString(
             $service,
