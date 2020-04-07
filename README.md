@@ -10,7 +10,7 @@ Installation
 ------------
 Install using composer:
 
-    composer require krlove/async-service-call-bundle
+    composer require ruth/async-service-call-bundle
 
 It should enable the bundle at `config/bundles.php`
 
