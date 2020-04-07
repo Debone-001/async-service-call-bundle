@@ -41,14 +41,14 @@ class AsyncServiceFactory
      */
     public function __construct(
         Filesystem $filesystem,
-        $rootDir,
-        $consolePath,
-        $phpPath
+        string $rootDir,
+        string $consolePath,
+        string $phpPath
     ) {
-        $this->filesystem = $filesystem;
-        $this->rootDir = $rootDir;
+        $this->filesystem  = $filesystem;
+        $this->rootDir     = $rootDir;
         $this->consolePath = $consolePath;
-        $this->phpPath = $phpPath;
+        $this->phpPath     = $phpPath;
     }
 
     /**
@@ -57,7 +57,7 @@ class AsyncServiceFactory
     public function createAsyncService()
     {
         $consolePath = $this->resolveConsolePath();
-        $phpPath = $this->resolvePhpPath();
+        $phpPath     = $this->resolvePhpPath();
 
         return new AsyncService($consolePath, $phpPath);
     }
@@ -88,7 +88,7 @@ class AsyncServiceFactory
         $phpPath = $this->phpPath;
 
         if ($phpPath === null) {
-            $finder = new PhpExecutableFinder();
+            $finder  = new PhpExecutableFinder();
             $phpPath = $finder->find();
         }
 

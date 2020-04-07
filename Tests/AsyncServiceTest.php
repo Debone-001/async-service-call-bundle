@@ -51,7 +51,7 @@ class AsyncServiceTest extends TestCase
                 'service' => 'service_id',
                 'method' => 'method',
                 'arguments' => [1, 'str', ['arr']],
-                'command_string' => '/php/path /console/path krlove:service:call service_id method --args=\'YTozOntpOjA7aToxO2k6MTtzOjM6InN0ciI7aToyO2E6MTp7aTowO3M6MzoiYXJyIjt9fQ==\' > /dev/null 2>/dev/null &',
+                'command_string' => '/php/path /console/path krlove:service:call service_id method --args=\'YTozOntpOjA7aToxO2k6MTtzOjM6InN0ciI7aToyO2E6MTp7aTowO3M6MzoiYXJyIjt9fQ==\' > /dev/null 2>/dev/null & echo $!',
             ],
         ];
     }

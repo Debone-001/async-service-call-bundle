@@ -47,30 +47,24 @@ class CallServiceCommandTest extends TestCase
      */
     protected $serviceMock;
 
-    protected function setUp()
+    protected function setUp() : void
     {
-        $this->command = new CallServiceCommand();
-        $this->container = $this->createMock(ContainerInterface::class);
-        $this->command->setContainer($this->container);
-        $this->input = $this->createMock(InputInterface::class);
-        $this->output = $this->createMock(OutputInterface::class);
-        $this->logger = $this->createMock(Logger::class);
+        $this->container   = $this->createMock(ContainerInterface::class);
+        $this->input       = $this->createMock(InputInterface::class);
+        $this->output      = $this->createMock(OutputInterface::class);
+        $this->logger      = $this->createMock(Logger::class);
         $this->serviceMock = $this->createMock(ServiceMock::class);
+        $this->command     = new CallServiceCommand($this->container, $this->logger);
     }
 
     public function testExecute()
     {
-        $this->container->expects($this->at(0))
-            ->method('get')
-            ->with('logger')
-            ->willReturn($this->logger);
-
         $this->input->expects($this->at(0))
             ->method('getArgument')
             ->with('service')
             ->willReturn('service_id');
 
-        $this->container->expects($this->at(1))
+        $this->container->expects($this->at(0))
             ->method('get')
             ->with('service_id')
             ->willReturn($this->serviceMock);
@@ -95,41 +89,40 @@ class CallServiceCommandTest extends TestCase
     {
         $exception = new \Exception('Service not found');
 
-        $this->container->expects($this->at(0))
-            ->method('get')
-            ->with('logger')
-            ->willReturn($this->logger);
-
         $this->input->expects($this->at(0))
             ->method('getArgument')
             ->with('service')
             ->willReturn('service_id');
 
-        $this->container->expects($this->at(1))
+        $this->container->expects($this->at(0))
             ->method('get')
             ->with('service_id')
             ->willThrowException($exception);
 
         $this->logger->expects($this->once())
             ->method('error')
-            ->with('Service not found');
+            ->with(
+                'krlove:service:call',
+                [
+                    'id'        => $this->command->getId(),
+                    'serviceId' => 'service_id',
+                    'method'    => null,
+                    'arguments' => null,
+                    'error'     => 'Service not found'
+                ]
+            );
 
         $this->execute();
     }
 
     public function testMethodNotExist()
     {
-        $this->container->expects($this->at(0))
-            ->method('get')
-            ->with('logger')
-            ->willReturn($this->logger);
-
         $this->input->expects($this->at(0))
             ->method('getArgument')
             ->with('service')
             ->willReturn('service_id');
 
-        $this->container->expects($this->at(1))
+        $this->container->expects($this->at(0))
             ->method('get')
             ->with('service_id')
             ->willReturn($this->serviceMock);
@@ -139,9 +132,20 @@ class CallServiceCommandTest extends TestCase
             ->with('method')
             ->willReturn('noSuchMethod');
 
+        $mockClassName = get_class($this->serviceMock);
+
         $this->logger->expects($this->once())
             ->method('error')
-            ->with($this->matchesRegularExpression("/Method noSuchMethod doesn\'t exist on class .*ServiceMock.*/"));
+            ->with(
+                'krlove:service:call',
+                [
+                    'id'        => $this->command->getId(),
+                    'serviceId' => 'service_id',
+                    'method'    => 'noSuchMethod',
+                    'arguments' => null,
+                    'error'     => "Method noSuchMethod doesn't exist on class {$mockClassName}"
+                ]
+            );
 
         $this->execute();
     }

@@ -2,8 +2,6 @@
 
 namespace Krlove\AsyncServiceCallBundle;
 
-use Symfony\Component\Process\Process;
-
 /**
  * Class AsyncService
  * @package Krlove\AsyncServiceCallBundle
@@ -26,38 +24,52 @@ class AsyncService
      * @param string $phpPath
      */
     public function __construct(
-        $consolePath,
-        $phpPath
+        string $consolePath,
+        string $phpPath
     ) {
         $this->consolePath = $consolePath;
         $this->phpPath = $phpPath;
     }
 
     /**
+     * Method that constructs the command with the service to be called.
+     *
      * @param string $service
      * @param string $method
-     * @param array $arguments
-     * @return int|null
+     * @param array  $arguments
+     * @return int
      */
-    public function call($service, $method, $arguments = [])
-    {
-        $commandline = $this->createCommandString($service, $method, $arguments);
+    public function call(
+        string $service,
+        string $method,
+        array  $arguments
+    ) : int {
+        $commandline = $this->createCommandString(
+            $service,
+            $method,
+            $arguments
+        );
 
         return $this->runProcess($commandline);
     }
 
     /**
+     * Creates the command string to be executed in background.
+     *
      * @param string $service
      * @param string $method
      * @param array $arguments
      * @return string
      */
-    protected function createCommandString($service, $method, $arguments)
-    {
+    protected function createCommandString(
+        string $service,
+        string $method,
+        array  $arguments
+    ) : string {
         $arguments = escapeshellarg(base64_encode(serialize($arguments)));
 
         return sprintf(
-            '%s %s krlove:service:call %s %s --args=%s > /dev/null 2>/dev/null &',
+            '%s %s krlove:service:call %s %s --args=%s > /dev/null 2>/dev/null & echo $!',
             $this->phpPath,
             $this->consolePath,
             $service,
@@ -67,14 +79,20 @@ class AsyncService
     }
 
     /**
+     * Executes the command that calls the service.
+     * It will return the PID.
+     *
      * @param string $commandline
-     * @return int|null
+     * @return int
      */
-    protected function runProcess($commandline)
+    protected function runProcess(string $commandline) : int
     {
-        $process = new Process($commandline);
-        $process->start();
+        exec($commandline, $op);
 
-        return $process->getPid();
+        if (!\is_array($op)) {
+            return 0;
+        }
+
+        return (int) $op[0];
     }
 }

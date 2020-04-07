@@ -18,13 +18,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('krlove_async_service_call');
+        $treeBuilder = new TreeBuilder('krlove_async_service_call');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
                 ->scalarNode('console_path')
-                    ->defaultValue(Kernel::MAJOR_VERSION < 3 ? 'app/console' : 'bin/console')
+                    ->defaultValue('bin/console')
                 ->end()
                 ->scalarNode('php_path')
                     ->defaultValue(null)

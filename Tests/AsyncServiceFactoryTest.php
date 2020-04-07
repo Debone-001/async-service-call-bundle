@@ -15,13 +15,20 @@ class AsyncServiceFactoryTest extends TestCase
 {
     /**
      * @dataProvider correctArgumentsProvider
+     *
+     * @param string $rootDir
+     * @param string $consolePath
+     * @param string $isConsolePathAbsolute
+     * @param string $absoluteConsolePath
+     * @param string $phpPath
+     * @throws \ReflectionException
      */
     public function testCreateAsyncServiceSuccess(
-        $rootDir,
-        $consolePath,
-        $isConsolePathAbsolute,
-        $absoluteConsolePath,
-        $phpPath
+        string $rootDir,
+        string $consolePath,
+        string $isConsolePathAbsolute,
+        string $absoluteConsolePath,
+        string $phpPath
     ) {
         /** @var Filesystem|MockObject $filesystem */
         $filesystem = $this->createMock(Filesystem::class);
