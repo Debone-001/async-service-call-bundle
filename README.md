@@ -3,9 +3,12 @@ AsyncServiceCallBundle
 
 This bundle allows you to execute methods of your services asynchronously in a background process.
 
+It is a fork on [krlove/async-service-call-bundle](https://github.com/krlove/async-service-call-bundle),
+updated to run in Symfony 4 or 5.
+
 Installation
 ------------
-Download using composer
+Install using composer:
 
     composer require krlove/async-service-call-bundle
 
@@ -36,7 +39,7 @@ Example:
 
 Usage
 -----
-Define any service
+Define any service:
 
     <?php
         
@@ -47,11 +50,11 @@ Define any service
         public function doSomething($int, $string, $array)
         {
             // do something heavy
-            sleep(10)
+            sleep(10);
         }
     }
 
-Register service
+Register service:
 
     # services.yml
     services:
@@ -66,10 +69,12 @@ Execute `doSomething` method asynchronously:
     $this->get('krlove.async')
          ->call('app.service.awesome', 'doSomething', [1, 'string', ['array']);
 
-Line above will execute `App\Service\AwesomeService::doSomething` method by running `krlove:service:call` command.
+Line above will execute `App\Service\AwesomeService::doSomething` method by running `krlove:service:call` command on background.
 
-We drop original approach with [symfony process](https://symfony.com/doc/current/components/process.html) `Symfony\Component\Process\Process`,
-and replaced by traditional `exec` php function. The reason why is this:
+You can follow it's execution by calling `top` on your console.
+
+Original approach with [symfony process](https://symfony.com/doc/current/components/process.html) `Symfony\Component\Process\Process` was abandoned
+in favor of a more traditional `exec` php function. The reason is this (that you can find in upper page):
 
 ```text
 If a Response is sent before a child process had a chance to complete, the server process will be killed (depending on your OS). 
