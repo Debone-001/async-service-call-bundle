@@ -10,7 +10,8 @@ services:
     Krlove\AsyncServiceCallBundle\AsyncServiceFactory: '@krlove.async.factory'
 
     krlove.async:
-        factory: ['@Krlove\AsyncServiceCallBundle\AsyncService', 'createAsyncService']
+        class: Krlove\AsyncServiceCallBundle\AsyncService
+        factory: ['@Krlove\AsyncServiceCallBundle\AsyncServiceFactory', 'createAsyncService']
         public: true
 
     krlove.service:
