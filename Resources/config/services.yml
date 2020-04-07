@@ -8,6 +8,5 @@ services:
             - '%krlove_async_service_call.php_path%'
 
     krlove.async:
-        class: Krlove\AsyncServiceCallBundle\AsyncService
-        factory: 'krlove.async.factory:createAsyncService'
+        factory: ['@Krlove\AsyncServiceCallBundle\AsyncService', 'createAsyncService']
         public: true
