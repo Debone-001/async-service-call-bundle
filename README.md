@@ -1,6 +1,11 @@
 AsyncServiceCallBundle
 ========================
 
+[![Latest Stable Version](https://poser.pugx.org/ruth/async-service-call-bundle/v/stable)](https://packagist.org/packages/ruth/async-service-call-bundle)
+[![Total Downloads](https://poser.pugx.org/ruth/async-service-call-bundle/downloads)](https://packagist.org/packages/ruth/async-service-call-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/ruth/async-service-call-bundle/v/unstable)](https://packagist.org/packages/ruth/async-service-call-bundle)
+[![License](https://poser.pugx.org/ruth/async-service-call-bundle/license)](https://packagist.org/packages/ruth/async-service-call-bundle)
+
 This bundle allows you to execute methods of your services asynchronously in a background process.
 
 It is a fork on [krlove/async-service-call-bundle](https://github.com/krlove/async-service-call-bundle),
