@@ -95,6 +95,7 @@ asynchronous service with a response (or exception) during request / response co
 
 For that you just have to call method `getProcessInstance` like this:
 
+    // 1. Standard way:
     $process = $this->get('krlove.async')
                     ->getProcessInstance('app.service.awesome', 'doSomething', [1, 'string', ['array']);
                     
@@ -106,8 +107,24 @@ For that you just have to call method `getProcessInstance` like this:
     $process->wait();
     
     // ... do things after the process has finished
-
-You have more information about this at [Symfony Process Component](https://symfony.com/doc/current/components/process.html)
+    $result = $process->getOutput();
+    
+    // 2. With callback function after service finishes:
+    $process = $this->get('krlove.async')
+                    ->getProcessInstance('app.service.awesome', 'doSomething', [1, 'string', ['array']);
+                    
+    // and to run asynchronously
+    $result = null;
+    $process->start(function ($res) use($process, &$result) {
+                        $result = $process->getOutput();
+                    });
+    
+    // ... do other things
+    
+    $process->wait();
+    
+    // you now have result from async service call available at $result variable.
+    
+    
+You have more information about Symfony Process Component [here](https://symfony.com/doc/current/components/process.html)
        
-
- 
