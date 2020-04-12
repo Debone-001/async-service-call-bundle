@@ -87,4 +87,27 @@ It means that your task will be stopped right away.
 Running an asynchronous process is not the same as running a process that survives its parent process.
 ```
 
+Usage with Symfony Process Component
+------------------------------------
+
+It is also possible to run your service with Symfony Process Component, and with that having an
+asynchronous service with a response (or exception) during request / response context.
+
+For that you just have to call method `getProcessInstance` like this:
+
+    $process = $this->get('krlove.async')
+                    ->getProcessInstance('app.service.awesome', 'doSomething', [1, 'string', ['array']);
+                    
+    // and to run asynchronously
+    $process->start();
+    
+    // ... do other things
+    
+    $process->wait();
+    
+    // ... do things after the process has finished
+
+You have more information about this at [Symfony Process Component](https://symfony.com/doc/current/components/process.html)
+       
+
  

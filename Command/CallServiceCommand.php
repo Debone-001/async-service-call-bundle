@@ -107,11 +107,17 @@ class CallServiceCommand extends Command implements ContainerAwareInterface
                 $result = call_user_func([$service, $this->serviceMethod]);
             }
 
+            if (\is_array($result) || \is_object($result)) {
+                $result = json_encode($result);
+            }
+
             $elapsedTime = microtime(true) - $start;
         } catch (\Exception $e) {
             $this->log(Logger::ERROR, $e->getMessage());
 
-            return 0;
+            $output->writeln($result);
+
+            return -1;
         }
 
         $this->log(
