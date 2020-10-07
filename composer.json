@@ -1,5 +1,5 @@
 {
-  "name": "ruth/async-service-call-bundle",
+  "name": "webedia/async-service-call-bundle",
   "type": "symfony-bundle",
   "description": "Symfony bundle for asynchronous service methods calls",
   "keywords": [
@@ -17,17 +17,21 @@
     {
       "name": "Filipe Fernandes",
       "email": "filipefernandes007@gmail.com"
+    },
+    {
+      "name": "Debone",
+      "email": "bernard.simeon@webedia-group.com"
     }
   ],
   "require": {
-    "php": ">=7.3",
-    "symfony/framework-bundle": "~5.0",
-    "symfony/console": "~5.0",
-    "symfony/monolog-bundle": "^3.5",
-    "symfony/process": "^5.0"
+    "php": ">=7.2",
+    "symfony/framework-bundle": "~3.4|~4.0",
+    "symfony/console": "^3.4|^4.0|^5.0",
+    "symfony/monolog-bundle": "^3.2",
+    "symfony/process": "^4.4"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": ">=5.0"
+    "symfony/phpunit-bridge": "^4.4|^5.0"
   },
   "autoload": {
     "psr-4": {
